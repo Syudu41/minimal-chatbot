@@ -1,16 +1,23 @@
 'use client';
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { memo } from 'react';
-import { useWindowSize } from 'usehooks-ts';
+import { models } from '@/lib/ai/models';
 
-import { ModelSelector } from '@/components/model-selector';
-import { SidebarToggle } from '@/components/sidebar-toggle';
-import { Button } from '@/components/ui/button';
-import { PlusIcon, VercelIcon } from './icons';
-import { useSidebar } from './ui/sidebar';
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+function PureChatHeader({ selectedModelId }: { selectedModelId: string }) {
+  const selectedModel = models.find((m) => m.id === selectedModelId);
+  const modelLabel = selectedModel?.label ?? selectedModelId;
+
+  return (
+    <header className="flex sticky top-0 z-10 bg-black border-b border-zinc-900 py-3 px-6 items-center">
+      <span className="text-zinc-500 text-xs font-mono tracking-widest uppercase">
+        {modelLabel}
+      </span>
+    </header>
+  );
+}
+
+export const ChatHeader = memo(PureChatHeader);
+
 
 function PureChatHeader({
   selectedModelId,
